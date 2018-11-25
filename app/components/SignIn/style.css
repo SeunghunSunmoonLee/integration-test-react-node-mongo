@@ -1,0 +1,123 @@
+/* temp fix for remember me */
+.ant-checkbox-wrapper .ant-checkbox {
+  margin-top: 3px !important;
+}
+.divider::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 50% !important;
+    right: 100% !important;
+    width: 5000px !important;
+    border-bottom: 1px solid rgb(228, 228, 228) !important;
+}
+.divider::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 100% !important;
+    width: 5000px !important;
+    border-bottom: 1px solid rgb(228, 228, 228) !important;
+}
+.divider {
+  border-bottom: 1px solid rgb(228, 228, 228)
+}
+.dividerOr {
+    font-weight: 600 !important;
+    overflow-wrap: break-word !important;
+    font-size: 14px !important;
+    line-height: 18px !important;
+    letter-spacing: normal !important;
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+    color: rgb(118, 118, 118) !important;
+    display: inline !important;
+    margin: 0px !important;
+}
+.login-form {
+  max-width: 100%;
+  padding-top: 24px;
+}
+.login-form-forgot {
+  float: right;
+}
+.login-form-email-form {
+  margin-bottom: 8px;
+  font-size: 16px !important;
+  line-height: 22px !important;
+  letter-spacing: normal !important;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+  text-transform: undefined !important;
+  color: #484848 !important;
+  padding-top: 11px !important;
+  padding-bottom: 11px !important;
+  font-weight: normal !important;
+  background-color: transparent !important;
+  border: 0px !important;
+  padding-left: 11px !important;
+  padding-right: 11px !important;
+  width: 100% !important;
+}
+.login-form-button {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 8px;
+  font-size: 16px !important;
+  line-height: 22px !important;
+  letter-spacing: normal !important;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  font-weight: 800 !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  text-decoration: none !important;
+  border-radius: 4px !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+}
+.login-form-button-local {
+  background: #FF5A5F !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+}
+.login-form-button-facebook {
+  color: rgb(255, 255, 255) !important;
+  background: rgb(69, 104, 178) !important;
+  border-color: transparent !important;
+}
+.login-form-button-google {
+  color: rgb(72, 72, 72) !important;
+  background: rgb(255, 255, 255) !important;
+  border-color: rgb(118, 118, 118) !important;
+}
+.ant-layout {
+  /* height: 100vh; */
+  /* height: calc(100%); */
+  min-height: 100vh;
+}
+/* use css to set position of modal */
+.vertical-center-modal {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.vertical-center-modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  width: 0;
+}
+
+.vertical-center-modal .ant-modal {
+  display: inline-block;
+  vertical-align: middle;
+  top: 0;
+  text-align: left;
+}
+
+@media only screen and (max-width: 768px) {
+  .ant-modal {
+    width: calc(100% - 20px) !important;
+    max-width: 500px;
+  }
+}

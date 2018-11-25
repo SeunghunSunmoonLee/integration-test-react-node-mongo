@@ -1,0 +1,396 @@
+{
+  "name": "seunghunlee-software",
+  "version": "0.3.0",
+  "description": "seunghunlee Software",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/SeunghunSunmoonLee/seunghunlee.net.git"
+  },
+  "engines": {
+    "npm": ">=6.4.1",
+    "node": ">=8.12.0",
+    "yarn": ">=1.10.1"
+  },
+  "author": "Seunghun Lee",
+  "license": "MIT",
+  "scripts": {
+    "analyze:clean": "rimraf stats.json",
+    "preanalyze": "npm run analyze:clean",
+    "analyze": "node ./internals/scripts/analyze.js",
+    "extract-intl": "node ./internals/scripts/extract-intl.js",
+    "npmcheckversion": "node ./internals/scripts/npmcheckversion.js",
+    "preinstall": "npm run npmcheckversion",
+    "postinstall": "npm run build:dll",
+    "prebuild": "npm run build:clean",
+    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build:clean": "rimraf ./build",
+    "build:dll": "node ./internals/scripts/dependencies.js",
+    "start": "cross-env NODE_ENV=development node server",
+    "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
+    "start:production": "npm run test && npm run build && npm run start:prod",
+    "start:prod": "cross-env NODE_ENV=production node server",
+    "presetup": "npm i chalk shelljs",
+    "setup": "node ./internals/scripts/setup.js",
+    "postsetup": "npm run build:dll",
+    "clean": "shjs ./internals/scripts/clean.js",
+    "clean:all": "npm run analyze:clean && npm run test:clean && npm run build:clean",
+    "generate": "plop --plopfile internals/generators/index.js",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:css": "stylelint './app/**/*.js'",
+    "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
+    "lint:eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts --fix",
+    "lint:js": "npm run lint:eslint -- . ",
+    "lint:staged": "lint-staged",
+    "pretest": "npm run test:clean && npm run lint",
+    "test:clean": "rimraf ./coverage",
+    "test": "cross-env NODE_ENV=test jest --coverage",
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "prettify": "prettier --write",
+    "heroku-postbuild": "npm run build"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true
+  },
+  "lint-staged": {
+    "*.js": [
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add --force"
+    ]
+  },
+  "pre-commit": "lint:staged",
+  "babel": {
+    "plugins": [
+      "styled-components"
+    ],
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false
+        }
+      ],
+      "react",
+      "stage-0"
+    ],
+    "env": {
+      "production": {
+        "only": [
+          "app"
+        ],
+        "plugins": [
+          "transform-react-remove-prop-types",
+          "transform-react-constant-elements"
+        ]
+      },
+      "test": {
+        "plugins": [
+          "transform-es2015-modules-commonjs",
+          "dynamic-import-node"
+        ]
+      }
+    }
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+      "browser": true,
+      "node": true,
+      "jest": true,
+      "es6": true
+    },
+    "plugins": [
+      "redux-saga",
+      "react",
+      "jsx-a11y"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "arrow-parens": [
+        "error",
+        "always"
+      ],
+      "arrow-body-style": [
+        2,
+        "as-needed"
+      ],
+      "class-methods-use-this": 0,
+      "comma-dangle": [
+        2,
+        "always-multiline"
+      ],
+      "import/imports-first": 0,
+      "import/newline-after-import": 0,
+      "import/no-dynamic-require": 0,
+      "import/no-extraneous-dependencies": 0,
+      "import/no-named-as-default": 0,
+      "import/no-unresolved": 2,
+      "import/no-webpack-loader-syntax": 0,
+      "import/prefer-default-export": 0,
+      "indent": [
+        2,
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "jsx-a11y/aria-props": 2,
+      "jsx-a11y/heading-has-content": 0,
+      "jsx-a11y/href-no-hash": 2,
+      "jsx-a11y/label-has-for": 2,
+      "jsx-a11y/mouse-events-have-key-events": 2,
+      "jsx-a11y/role-has-required-aria-props": 2,
+      "jsx-a11y/role-supports-aria-props": 2,
+      "max-len": 0,
+      "newline-per-chained-call": 0,
+      "no-confusing-arrow": 0,
+      "no-console": 1,
+      "no-use-before-define": 0,
+      "prefer-template": 2,
+      "react/forbid-prop-types": 0,
+      "react/jsx-first-prop-new-line": [
+        2,
+        "multiline"
+      ],
+      "react/jsx-filename-extension": 0,
+      "react/jsx-no-target-blank": 0,
+      "react/require-default-props": 0,
+      "react/require-extension": 0,
+      "react/self-closing-comp": 0,
+      "redux-saga/no-yield-in-race": 2,
+      "redux-saga/yield-effects": 2,
+      "require-yield": 0
+    },
+    "settings": {
+      "import/resolver": {
+        "webpack": {
+          "config": "./internals/webpack/webpack.prod.babel.js"
+        }
+      }
+    }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "app/**/*.{js,jsx}",
+      "server/**/*.{js,jsx}",
+      "!app/**/*.test.{js,jsx}",
+      "!app/*/RbGenerated*/*.{js,jsx}",
+      "!app/app.js",
+      "!app/global-styles.js",
+      "!app/*/*/Loadable.{js,jsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 98,
+        "branches": 91,
+        "functions": 98,
+        "lines": 98
+      }
+    },
+    "moduleDirectories": [
+      "node_modules",
+      "app",
+      "server"
+    ],
+    "moduleNameMapper": {
+      ".*\\.(css|less|styl|scss|sass)$": "<rootDir>/internals/mocks/cssModule.js",
+      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/image.js"
+    },
+    "setupTestFrameworkScriptFile": "<rootDir>/internals/testing/test-bundler.js",
+    "setupFiles": [
+      "raf/polyfill",
+      "<rootDir>/internals/testing/enzyme-setup.js"
+    ],
+    "testRegex": "tests/.*\\.test\\.js$",
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  },
+  "dependencies": {
+    "@feathersjs/authentication": "^2.0.1",
+    "@feathersjs/authentication-client": "^1.0.6",
+    "@feathersjs/authentication-jwt": "^2.0.0",
+    "@feathersjs/authentication-local": "^1.0.2",
+    "@feathersjs/authentication-oauth2": "^1.2.2",
+    "@feathersjs/client": "^3.7.3",
+    "@feathersjs/configuration": "^1.0.1",
+    "@feathersjs/errors": "^3.2.0",
+    "@feathersjs/express": "^1.1.2",
+    "@feathersjs/feathers": "^3.2.3",
+    "@feathersjs/socketio": "^3.0.1",
+    "@feathersjs/socketio-client": "^1.1.4",
+    "@google-cloud/vision": "^0.19.0",
+    "Dante2": "0.5.0-rc5",
+    "antd": "^3.10.1",
+    "apiai": "^4.0.3",
+    "axios": "^0.18.0",
+    "babel-polyfill": "6.26.0",
+    "body-parser": "^1.18.3",
+    "chalk": "2.4.1",
+    "compression": "1.7.2",
+    "cors": "^2.8.4",
+    "cross-env": "5.2.0",
+    "disqus-react": "^1.0.5",
+    "dotenv": "^6.0.0",
+    "draft-js": "^0.10.5",
+    "draftjs-to-html": "^0.8.4",
+    "express": "4.16.3",
+    "faker": "^4.1.0",
+    "feathers-mongoose": "^6.1.4",
+    "feathers-sync": "^1.0.3",
+    "fontfaceobserver": "2.0.13",
+    "googleapis": "^32.0.0",
+    "helmet": "^3.9.0",
+    "heroku-ssl-redirect": "^0.0.4",
+    "history": "4.7.2",
+    "hoist-non-react-statics": "2.5.5",
+    "html-to-draftjs": "^1.4.0",
+    "immutability-helper": "2.4.0",
+    "immutable": "3.8.2",
+    "intl": "1.2.5",
+    "invariant": "2.2.4",
+    "ip": "1.1.5",
+    "lodash": "4.17.10",
+    "lqip.macro": "^0.1.5",
+    "minimist": "1.2.0",
+    "moment": "^2.22.2",
+    "moment-range": "^4.0.1",
+    "mongoose": "^5.2.13",
+    "passport-facebook": "^2.1.1",
+    "passport-facebook-token": "^3.3.0",
+    "passport-google-oauth2": "^0.1.6",
+    "passport-google-oauth20": "^1.0.0",
+    "passport-google-token": "^0.1.2",
+    "pica": "^4.1.1",
+    "prismjs": "^1.15.0",
+    "prop-types": "15.6.1",
+    "react": "16.4.1",
+    "react-burger-menu": "^2.5.4",
+    "react-camera": "^0.1.3",
+    "react-color": "^2.14.1",
+    "react-cookie-consent": "^1.9.0",
+    "react-datepicker": "^1.4.1",
+    "react-dnd": "^2.6.0",
+    "react-dnd-html5-backend": "^2.6.0",
+    "react-dom": "16.4.1",
+    "react-draft-wysiwyg": "^1.12.13",
+    "react-ga": "^2.5.3",
+    "react-helmet": "5.2.0",
+    "react-ideal-image": "^0.0.5",
+    "react-image-gallery": "^0.8.6",
+    "react-images": "^0.5.13",
+    "react-intl": "2.4.0",
+    "react-lazyload": "^2.3.0",
+    "react-loadable": "5.4.0",
+    "react-redux": "5.0.7",
+    "react-router-dom": "4.3.1",
+    "react-router-redux": "5.0.0-alpha.9",
+    "react-typist": "^2.0.4",
+    "react-vis": "^1.9.2",
+    "reactcss": "^1.2.3",
+    "redux": "4.0.0",
+    "redux-form": "^7.3.0",
+    "redux-form-antd": "^1.0.5",
+    "redux-immutable": "4.0.0",
+    "redux-persist": "^5.9.1",
+    "redux-saga": "0.16.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "3.0.1",
+    "sanitize.css": "4.1.0",
+    "serve-favicon": "^2.4.5",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.1.1",
+    "spotify-web-api-node": "^3.1.1",
+    "styled-components": "3.3.2",
+    "uuid": "^3.3.2",
+    "voucher-code-generator": "^1.1.1",
+    "warning": "4.0.1",
+    "web3": "^1.0.0-beta.36",
+    "whatwg-fetch": "2.0.4",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "add-asset-html-webpack-plugin": "2.1.3",
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.3",
+    "babel-eslint": "8.2.3",
+    "babel-loader": "7.1.4",
+    "babel-plugin-dynamic-import-node": "1.2.0",
+    "babel-plugin-import": "^1.10.0",
+    "babel-plugin-react-intl": "2.4.0",
+    "babel-plugin-react-transform": "3.0.0",
+    "babel-plugin-styled-components": "1.5.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
+    "babel-plugin-transform-react-constant-elements": "6.23.0",
+    "babel-plugin-transform-react-inline-elements": "6.22.0",
+    "babel-plugin-transform-react-jsx-source": "6.22.0",
+    "babel-plugin-transform-react-remove-prop-types": "0.4.13",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-0": "6.24.1",
+    "circular-dependency-plugin": "5.0.2",
+    "coveralls": "3.0.1",
+    "css-loader": "0.28.11",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0",
+    "enzyme-to-json": "3.3.4",
+    "eslint": "4.19.1",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-import-resolver-webpack": "0.10.0",
+    "eslint-plugin-import": "2.12.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-prettier": "2.6.0",
+    "eslint-plugin-react": "7.9.1",
+    "eslint-plugin-redux-saga": "0.9.0",
+    "eventsource-polyfill": "0.9.6",
+    "exports-loader": "0.7.0",
+    "feathers-memory": "^2.2.0",
+    "file-loader": "1.1.11",
+    "html-loader": "0.5.5",
+    "html-webpack-plugin": "3.2.0",
+    "husky": "0.14.3",
+    "image-webpack-loader": "^4.4.0",
+    "imports-loader": "0.8.0",
+    "jest": "^23.6.0",
+    "jest-cli": "23.1.0",
+    "jest-styled-components": "5.0.1",
+    "lint-staged": "7.2.0",
+    "ngrok": "3.0.1",
+    "node-plop": "0.15.0",
+    "null-loader": "0.1.1",
+    "offline-plugin": "5.0.5",
+    "plop": "2.0.0",
+    "pre-commit": "1.2.2",
+    "prettier": "1.13.5",
+    "react-test-renderer": "16.4.1",
+    "rimraf": "2.6.2",
+    "shelljs": "0.8.2",
+    "shx": "^0.3.2",
+    "style-loader": "0.21.0",
+    "stylelint": "9.3.0",
+    "stylelint-config-recommended": "2.1.0",
+    "stylelint-config-styled-components": "0.1.1",
+    "stylelint-processor-styled-components": "1.3.1",
+    "svg-url-loader": "2.3.2",
+    "url-loader": "1.0.1",
+    "webpack": "4.12.0",
+    "webpack-cli": "3.0.8",
+    "webpack-dev-middleware": "3.1.3",
+    "webpack-hot-middleware": "2.22.2",
+    "webpack-pwa-manifest": "3.6.2"
+  }
+}

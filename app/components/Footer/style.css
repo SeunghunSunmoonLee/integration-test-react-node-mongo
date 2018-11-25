@@ -1,0 +1,39 @@
+.footer-logo1 {
+  width: 50px;
+  height: 55px;
+  background-image: url(https://res.cloudinary.com/seunghunlee/image/upload/v1519187918/yonsei-logo_mrixjd.png) !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% !important;
+  background-size: 100% !important;
+  /* margin: 10px 24px 10px 0; */
+  margin: 13px 0 16px 0 !important;
+  float: left;
+}
+.footer-logo2 {
+  width: 100px;
+  height: 55px;
+  background-image: url(https://res.cloudinary.com/seunghunlee/image/upload/v1519266305/white-Phase_Transformation_Laboratory_rwdd48.png) !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% !important;
+  background-size: 100% !important;
+  margin: 12px 24px 10px 10px;
+  float: left;
+}
+.footer {
+  background: transparent;
+  color: inherit;
+}
+.footer-logo {
+  width: 120px;
+  height: 35px;
+  background-image: url(https://res.cloudinary.com/seunghunlee/image/upload/v1514172261/logo_wt342f.svg) !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% !important;
+  background-size: 60% !important;
+
+}
+@media only screen and (max-width: 700px) {
+  .footer-logo {
+    margin-bottom: 10px;
+  }
+}

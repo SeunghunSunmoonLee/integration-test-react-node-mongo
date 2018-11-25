@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Karla|Roboto');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+body {
+  /* font-family: 'Karla', sans-serif; */
+  color: #323232;
+  font-family: Montserrat, Arial, sans-serif;
+}

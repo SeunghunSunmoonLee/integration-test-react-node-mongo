@@ -1,0 +1,63 @@
+{
+  "host": "seunghunlee.net",
+  "port": 3000,
+  "public": "../public/",
+  "paginate": {
+    "default": 10,
+    "max": 50
+  },
+  "mongodb":
+    "secret",
+  "mongodbLocalDev": "mongodb://localhost:27017/interview",
+  "authentication": {
+    "secret":
+      "secret",
+    "strategies": ["jwt", "local", "facebook", "google"],
+    "path": "/authentication",
+    "service": "users",
+    "jwt": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://www.seunghunlee.net",
+      "subject": "anonymous",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "entity": "user",
+      "usernameField": "email",
+      "passwordField": "password"
+    },
+    "facebook": {
+      "clientID": "secret",
+      "clientSecret": "secret",
+      "scope": ["public_profile", "email"],
+      "profileFields": [
+        "id",
+        "displayName",
+        "email",
+        "name",
+        "cover",
+        "picture"
+      ],
+      "successRedirect": "https://www.seunghunlee.net/",
+      "callbackURL": "https://www.seunghunlee.net/auth/facebook/callback"
+    },
+    "google": {
+      "clientID":
+        "secret",
+      "clientSecret": "secret",
+      "scope": ["profile openid email"],
+      "successRedirect": "https://www.seunghunlee.net/",
+      "callbackURL": "https://www.seunghunlee.net/auth/google/callback"
+    },
+    "cookie": {
+      "enabled": true,
+      "name": "feathers-jwt",
+      "httpOnly": false,
+      "secure": false
+    }
+  }
+}
