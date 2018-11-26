@@ -1,4 +1,4 @@
-FROM containership/alpine-node-yarn
+FROM node:9
 
 COPY internals/scripts integration-test-react-node-mongo/internals/scripts
 COPY package.json integration-test-react-node-mongo/package.json
